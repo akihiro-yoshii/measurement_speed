@@ -15,34 +15,7 @@ Python: 3.4.3
 `list`と`collections.deque`を比較
 10万のデータに対して10万回データを追加して比較
 
-<details><summary>実装</summary><div>
-
-```python:insert_first.py
-import timeit
-import random
-from collections import deque
-
-loop = 10**5
-data_size = 10**5
-data_range = (1, 10**9)
-
-# list
-cmp_list = [random.randint(*data_range) for _ in range(data_size)]
-ret_list = timeit.timeit(
-    lambda: cmp_list.insert(0, random.randint(*data_range)),
-    number=loop)
-
-# deque
-cmp_deque = deque([random.randint(*data_range) for _ in range(data_size)])
-ret_deque = timeit.timeit(
-    lambda: cmp_deque.appendleft(random.randint(*data_range)),
-    number=loop)
-
-print(" list: {:6.3f}sec".format(ret_list))
-print("deque: {:6.3f}sec".format(ret_deque))
-```
-
-</div></details>
+[実装](/insert_first.py)
 先頭への追加ではdequeを使う方が良い．
 
 ```text:result

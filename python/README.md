@@ -5,7 +5,7 @@ Python3にてlist系データの各操作についての処理時間を計測す
 競技プログラミングでコンテスト中に毎回データ構造を考えており，
 時間がもったいないので外部記憶化しておく．
 必要な操作から適切なlistを選択できる情報をまとめる．
-適宜増やしていく予定
+適宜増やしていく予定．
 
 # 前提条件
 Python: 3.4.3
@@ -13,10 +13,10 @@ Python: 3.4.3
 ## データ参照
 ### 先頭データの参照
 `list`と`collections.deque`と`dict`で比較
-10万のデータに対して100万回先頭データへアクセスして比較
+10^5のデータに対して10^6回先頭データへアクセスして比較
 
 [get_first.py](/python/get_first.py)で実装．
-先頭の参照は意外とみんな同じくらい
+先頭の参照は有意差はみられない．
 
 ```text
  list:  0.181sec
@@ -24,10 +24,37 @@ deque:  0.178sec
  dict:  0.170sec
 ```
 
+### 中央データの参照
+`list`と`collections.deque`と`dict`で比較
+10^5のデータに対して10^6回中央データへアクセスして比較
+
+[get_center.py](/python/get_center.py)で実装．
+中央データの参照を行う際は`collections.deque`は避けたほうが良い．
+
+```text
+ list:  0.176sec
+deque:  5.624sec
+ dict:  0.233sec
+```
+
+### 末尾データの参照
+`list`と`collections.deque`と`dict`で比較
+10^5のデータに対して10^6回末尾データへアクセスして比較
+
+[get_last.py](/python/get_last.py)で実装．
+末尾データの参照を行う際はやや`dict`が不利な模様．
+避けるべきとまでは言えないと考えられる．
+
+```text
+ list:  0.186sec
+deque:  0.190sec
+ dict:  0.250sec
+```
+
 ## データ挿入
 ### 先頭へのデータ挿入
 `list`と`collections.deque`を比較
-10万のデータに対して10万回データを追加して比較
+10^5のデータに対して10^5回データを追加して比較
 
 [insert_first.py](/python/insert_first.py)で実装．
 先頭への追加ではdequeを使う方が良い．
@@ -39,7 +66,7 @@ deque:  0.226sec
 
 ### 末尾へのデータ挿入
 `list`と`collections.deque`を比較
-10万のデータに対して10万回データを追加して比較
+10^5のデータに対して10^6回データを追加して比較
 
 [insert_last.py](/python/insert_last.py)で実装．
 
